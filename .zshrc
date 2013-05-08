@@ -32,7 +32,16 @@ NO_NOTIFY="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx pip vi-mode virtualenvwrapper last-working-dir fabric autojump)
+plugins=(
+    git
+    osx
+    pip
+    vi-mode
+# automatically source virtualenvs
+    virtualenvwrapper
+    fabric
+    autojump
+    )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -42,13 +51,13 @@ source ~/.rc.sh
 
 alias zshrc='vim ~/.zshrc; source ~/.zshrc'
 
+# Do not correct commands listed in `~/.zsh_nocorrect`
 if [ -f ~/.zsh_nocorrect ]; then
     while read -r COMMAND; do
         alias $COMMAND="nocorrect $COMMAND"
     done < .zsh_nocorrect
 fi
 
-# Automatically `ls` after each `cd`
 function chpwd() {
     # Set up zsh options to emulate the specified shell as much as possible.
 
@@ -58,8 +67,8 @@ function chpwd() {
     test -f .env && source .env
 }
 
+# If the contents of the current working directory have changed, `ls`.
 function precmd() {
-    # If the contents of the present working directory change, ls.
 
     a=$(cat ~/.contents)
     b=$(ls)
